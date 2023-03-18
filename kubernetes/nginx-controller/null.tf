@@ -1,6 +1,6 @@
 resource "null_resource" "get_nlb_hostname" {
     provisioner "local-exec" {
-        command = "aws eks --region eu-west--2 update-kubeconfig --name hr-dev-eks-demo && kubectl get svc fullnameOverridevalue-contoller.namevalue -n '${kubernetes_namespace.nginx-namespace.metadata[0].name}' -o jsonpath='{status.loadBalancer.ingress[*].hostname}' > ${path.module}/lb_hostname.txt"
+        command = "aws eks update-kubeconfig --name hr-dev-eks-demo --region eu-west-2 && kubectl get svc load-nginx  --namespace nginx-ingress -o jsonpath='{.status.loadBalancer.ingress[*].hostname}' > ${path.module}/lb_hostname.txt"
     }
     depends_on = [
       helm_release.ingress_nginx
@@ -34,6 +34,7 @@ resource "aws_route53_record" "C-record" {
   allow_overwrite = true
   zone_id         = aws_route53_zone.hosted_zone.zone_id
   name            = each.value
+  ttl             = 300
   type            = "CNAME"
   records          = [data.local_file.lb_hostname.content]
 
