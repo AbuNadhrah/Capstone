@@ -35,7 +35,7 @@ resource "aws_route53_record" "C-record" {
   zone_id         = aws_route53_zone.hosted_zone.zone_id
   name            = each.value
   type            = "CNAME"
-  record          = [data.local_file.lb_hostname.content]
+  records          = [data.local_file.lb_hostname.content]
 
   depends_on = [
     data.local_file.lb_hostname
