@@ -81,6 +81,20 @@ pipeline {
             }
         }
 
+         stage("route53") {
+             when {
+                expression { params.ENVIRONMENT == 'create' }
+            }
+            steps {
+                script {
+                    dir('kubernetes/cert-manager') {
+                        sh "terraform init"
+                        sh "terraform apply -auto-approve"
+                    }
+                }
+            }
+        }
+
          stage("Create prometheus") {
              when {
                 expression { params.ENVIRONMENT == 'destroy' }
@@ -140,6 +154,19 @@ pipeline {
             steps {
                 script {
                     dir('kubernetes/ingress-rule') {
+                        sh "terraform destroy -auto-approve"
+                    }
+                }
+            }
+        }
+
+        stage("Destroy route53") {
+             when {
+                expression { params.ENVIRONMENT == 'destroy' }
+            }
+            steps {
+                script {
+                    dir('kubernetes/cert-manager') {
                         sh "terraform destroy -auto-approve"
                     }
                 }
