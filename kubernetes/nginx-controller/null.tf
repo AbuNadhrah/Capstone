@@ -26,6 +26,7 @@ locals {
     namea = "sock-shop.${var.domain_name}"
     nameb = "voting-app.${var.domain_name}"
     named = "grafana.${var.domain_name}"
+    namee = "result.${var.domain_name}"
   }
 }
 
