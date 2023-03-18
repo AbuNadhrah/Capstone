@@ -41,6 +41,17 @@ pipeline {
             }
         }
 
+         stage("Create nginx-conroller & route53") {
+            steps {
+                script {
+                    dir('kubernetes/nginx-controller') {
+                        sh "terraform init"
+                        sh "terraform apply -auto-approve"
+                    }
+                }
+            }
+        }
+
         stage("Deploy ingress rule to EKS") {
             steps {
                 script {
@@ -52,15 +63,6 @@ pipeline {
             }
         }
 
-           stage("Create nginx-conroller & route53") {
-            steps {
-                script {
-                    dir('kubernetes/nginx-controller') {
-                        sh "terraform init"
-                        sh "terraform apply -auto-approve"
-                    }
-                }
-            }
-        }
+    
     }
 }
