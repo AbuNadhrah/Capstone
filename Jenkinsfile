@@ -6,22 +6,12 @@ pipeline {
         AWS_DEFAULT_REGION = "eu-west-2"
     }
     stages {
-        stage("Create nginx-conroller & route53") {
-            steps {
-                script {
-                    dir('kubernetes/nginx-controller') {
-                        sh "aws eks --region eu-west-2 update-kubeconfig --name hr-dev-eks-demo"
-                        sh "terraform init"
-                        sh "terraform apply -auto-approve"
-                    }
-                }
-            }
-        }
-
+     
         stage("Create prometheus") {
             steps {
                 script {
                     dir('kubernetes/prometheus-helm') {
+                        sh "aws eks --region eu-west-2 update-kubeconfig --name hr-dev-eks-demo"
                         sh "terraform init"
                         sh "terraform apply -auto-approve"
                     }
@@ -55,6 +45,17 @@ pipeline {
             steps {
                 script {
                     dir('kubernetes/ingress-rule') {
+                        sh "terraform init"
+                        sh "terraform apply -auto-approve"
+                    }
+                }
+            }
+        }
+
+           stage("Create nginx-conroller & route53") {
+            steps {
+                script {
+                    dir('kubernetes/nginx-controller') {
                         sh "terraform init"
                         sh "terraform apply -auto-approve"
                     }
