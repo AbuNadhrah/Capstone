@@ -8,7 +8,7 @@ resource "aws_eks_node_group" "eks_ng_public" {
   ami_type       = "AL2_x86_64"
   capacity_type  = "ON_DEMAND"
   disk_size      = 20
-  instance_types = ["t2.medium"]
+  instance_types = ["t2.xlarge"]
 
   remote_access {
     ec2_ssh_key = "root-server2-london" # If you specify this configuration, but do not specify source_security_group_ids when you create an EKS Node Group port 22 is open to the Internet (0.0.0.0/0).
