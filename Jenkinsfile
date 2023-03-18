@@ -95,7 +95,7 @@ pipeline {
             }
         }
 
-         stage("Create prometheus") {
+         stage("destroy prometheus") {
              when {
                 expression { params.ENVIRONMENT == 'destroy' }
             }
@@ -108,7 +108,7 @@ pipeline {
             }
         }
 
-        stage("Deploy voting-app to EKS") {
+        stage("Destroy voting-app in EKS") {
              when {
                 expression { params.ENVIRONMENT == 'destroy' }
             }
@@ -121,7 +121,7 @@ pipeline {
             }
         }
 
-        stage("Deploy sock-shop to EKS") {
+        stage("Destroy sock-shop in EKS") {
              when {
                 expression { params.ENVIRONMENT == 'destroy' }
             }
@@ -134,7 +134,7 @@ pipeline {
             }
         }
 
-         stage("Create nginx-conroller & route53") {
+         stage("destroy nginx-conroller") {
              when {
                 expression { params.ENVIRONMENT == 'destroy' }
             }
@@ -147,7 +147,7 @@ pipeline {
             }
         }
 
-        stage("Deploy ingress rule to EKS") {
+        stage("Destroy ingress rule in EKS") {
              when {
                 expression { params.ENVIRONMENT == 'destroy' }
             }
