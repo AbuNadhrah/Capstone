@@ -9,7 +9,7 @@ resource "time_sleep" "wait_for_kubernetes" {
 
 data "local_file" "lb_hostname"{
     filename = "${path.module}/lb_hostname.txt"
-    depends_on = [
+     depends_on = [
       time_sleep.wait_for_kubernetes
     ]
 }
@@ -34,6 +34,7 @@ resource "aws_route53_record" "C-record" {
   allow_overwrite = true
   zone_id         = aws_route53_zone.hosted_zone.zone_id
   name            = each.value
+  ttl             = 300
   type            = "CNAME"
   records          = [data.local_file.lb_hostname.content]
 
@@ -90,3 +91,4 @@ resource "aws_acm_certificate_validation" "acm_certificate_validation" {
   certificate_arn         = aws_acm_certificate.acm_certificate.arn
   validation_record_fqdns = [for record in aws_route53_record.route53_record : record.fqdn]
 }
+
