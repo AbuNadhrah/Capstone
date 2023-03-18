@@ -31,7 +31,7 @@ resource "helm_release" "ingress_nginx" {
 
   set {
     name = "fullnameOverride"
-    value = "loadBalancer"
+    value = "my-loadBalancer"
   }
 
   set {
