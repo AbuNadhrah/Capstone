@@ -53,6 +53,20 @@ pipeline {
             }
         }
 
+         stage("Deploy ingress rule to EKS") {
+             when {
+                expression { params.ENVIRONMENT == 'create' }
+            }
+            steps {
+                script {
+                    dir('kubernetes/ingress-rule') {
+                        sh "terraform init"
+                        sh "terraform apply -auto-approve"
+                    }
+                }
+            }
+        }
+
          stage("Create nginx-conroller & route53") {
              when {
                 expression { params.ENVIRONMENT == 'create' }
@@ -67,19 +81,7 @@ pipeline {
             }
         }
 
-        stage("Deploy ingress rule to EKS") {
-             when {
-                expression { params.ENVIRONMENT == 'create' }
-            }
-            steps {
-                script {
-                    dir('kubernetes/ingress-rule') {
-                        sh "terraform init"
-                        sh "terraform apply -auto-approve"
-                    }
-                }
-            }
-        }
+       
 
          stage("destroy prometheus") {
              when {
@@ -120,6 +122,19 @@ pipeline {
             }
         }
 
+        stage("Destroy ingress rule in EKS") {
+             when {
+                expression { params.ENVIRONMENT == 'destroy' }
+            }
+            steps {
+                script {
+                    dir('kubernetes/ingress-rule') {
+                        sh "terraform destroy -auto-approve"
+                    }
+                }
+            }
+        }
+        
          stage("destroy nginx-conroller") {
              when {
                 expression { params.ENVIRONMENT == 'destroy' }
@@ -133,17 +148,5 @@ pipeline {
             }
         }
 
-        stage("Destroy ingress rule in EKS") {
-             when {
-                expression { params.ENVIRONMENT == 'destroy' }
-            }
-            steps {
-                script {
-                    dir('kubernetes/ingress-rule') {
-                        sh "terraform destroy -auto-approve"
-                    }
-                }
-            }
-        }
     }
 }
