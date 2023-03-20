@@ -26,6 +26,13 @@ resource "kubernetes_ingress_v1" "voting-ingress" {
         }
       }
     }
+
+    tls {
+      hosts = [
+        "voting-app.nwokolo.live"
+      ]
+      secret_name = "alt"
+    }
   }
 }
 
@@ -57,6 +64,12 @@ resource "kubernetes_ingress_v1" "result-ingress" {
           }
         }
       }
+    }
+    tls {
+      hosts = [
+        "result.nwokolo.live"
+      ]
+      secret_name = "alt"
     }
   }
 }
