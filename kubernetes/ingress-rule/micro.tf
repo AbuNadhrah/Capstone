@@ -26,5 +26,11 @@ resource "kubernetes_ingress_v1" "micro-ingress" {
         }
       }
     }
+     tls {
+      hosts = [
+        "sock-shop.nwokolo.live"
+      ]
+      secret_name = "alt"
+    }
   }
 }
