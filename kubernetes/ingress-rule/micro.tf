@@ -7,6 +7,8 @@ resource "kubernetes_ingress_v1" "micro-ingress" {
     }
     annotations = {
       "kubernetes.io/ingress.class" : "nginx"
+      "nginx.ingress.kubernetes.io/ssl-redirect" : "true"
+      "cert-manager.io/cluster-issuer" : "letsencrypt-prod"
     }
   }
 
