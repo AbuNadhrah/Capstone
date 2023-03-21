@@ -6,9 +6,7 @@ resource "kubernetes_ingress_v1" "voting-ingress" {
       name = "voting-service"
     }
     annotations = {
-      "kubernetes.io/ingress.class" = "nginx"
-      "nginx.ingress.kubernetes.io/ssl-redirect" = "true"
-      "cert-manager.io/cluster-issuer" = "letsencrypt-prod"
+      "kubernetes.io/ingress.class" : "nginx"
     }
   }
 
@@ -28,13 +26,6 @@ resource "kubernetes_ingress_v1" "voting-ingress" {
         }
       }
     }
-
-    tls {
-      hosts = [
-        "voting-app.nwokolo.live"
-      ]
-      secret_name = "alt"
-    }
   }
 }
 
@@ -47,9 +38,7 @@ resource "kubernetes_ingress_v1" "result-ingress" {
       name = "voting-service"
     }
     annotations = {
-      "kubernetes.io/ingress.class" = "nginx"
-      "nginx.ingress.kubernetes.io/ssl-redirect" = "true"
-      "cert-manager.io/cluster-issuer" = "letsencrypt-prod"
+      "kubernetes.io/ingress.class" : "nginx"
     }
   }
 
@@ -68,12 +57,6 @@ resource "kubernetes_ingress_v1" "result-ingress" {
           }
         }
       }
-    }
-    tls {
-      hosts = [
-        "result.nwokolo.live"
-      ]
-      secret_name = "alt"
     }
   }
 }
