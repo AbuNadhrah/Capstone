@@ -1,5 +1,5 @@
 # update the ubuntu server
-sudo apt-get update
+
 sudo apt-get upgrade -y
 
 
