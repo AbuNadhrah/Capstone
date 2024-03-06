@@ -7,20 +7,20 @@ terraform {
   }
 }
 
-data "aws_eks_cluster" "hr-dev-eks-demo" {
-  name = "hr-dev-eks-demo"
+data "aws_eks_cluster" "sales-prod-eks-sales" {
+  name = "sales-prod-eks-sales"
 }
-data "aws_eks_cluster_auth" "hr-dev-eks-demo_auth" {
-  name = "hr-dev-eks-demo_auth"
+data "aws_eks_cluster_auth" "sales-prod-eks-sales_auth" {
+  name = "sales-prod-eks-sales_auth"
 }
 provider "kubernetes" {
-  host                   = data.aws_eks_cluster.hr-dev-eks-demo.endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.hr-dev-eks-demo.certificate_authority[0].data)
-  version          = "2.16.1"
+  host                   = data.aws_eks_cluster.sales-prod-eks-sales.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.sales-prod-eks-sales.certificate_authority[0].data)
+  #version          = "2.16.1"
   config_path = "~/.kube/config"
   exec {
     api_version = "client.authentication.k8s.io/v1beta1"
-    args        = ["eks", "get-token", "--cluster-name", "hr-dev-eks-demo"]
+    args        = ["eks", "get-token", "--cluster-name", "sales-prod-eks-sales"]
     command     = "aws"
   }
 }
