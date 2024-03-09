@@ -1,2 +1,4 @@
 terraform-provider-aws_v5.38.0_x5.exe
 .terraform/
+aws/
+awscliv2.zip

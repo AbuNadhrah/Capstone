@@ -3,7 +3,7 @@ pipeline {
     environment {
         AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
-        AWS_DEFAULT_REGION = "eu-west-2"
+        AWS_DEFAULT_REGION = "eu-west-1"
     }
     parameters{
         choice(name: 'ENVIRONMENT', choices: ['create', 'destroy'], description: 'create and destroy cluster with one click')
@@ -17,7 +17,7 @@ pipeline {
             steps {
                 script {
                     dir('kubernetes/prometheus-helm') {
-                        sh "aws eks --region eu-west-2 update-kubeconfig --name hr-dev-eks-demo"
+                        sh "aws eks --region eu-west-1 update-kubeconfig --name sales-prod-eks-sales"
                         sh "terraform init"
                         sh "terraform apply -auto-approve"
                     }
@@ -25,19 +25,19 @@ pipeline {
             }
         }
 
-        stage("Deploy voting-app to EKS") {
-             when {
-                expression { params.ENVIRONMENT == 'create' }
-            }
-            steps {
-                script {
-                    dir('kubernetes/voting-app') {
-                        sh "terraform init"
-                        sh "terraform apply -auto-approve"
-                    }
-                }
-            }
-        }
+        // stage("Deploy voting-app to EKS") {
+        //      when {
+        //         expression { params.ENVIRONMENT == 'create' }
+        //     }
+        //     steps {
+        //         script {
+        //             dir('kubernetes/voting-app') {
+        //                 sh "terraform init"
+        //                 sh "terraform apply -auto-approve"
+        //             }
+        //         }
+        //     }
+        // }
 
         stage("Deploy sock-shop to EKS") {
              when {
@@ -96,18 +96,18 @@ pipeline {
             }
         }
 
-        stage("Destroy voting-app in EKS") {
-             when {
-                expression { params.ENVIRONMENT == 'destroy' }
-            }
-            steps {
-                script {
-                    dir('kubernetes/voting-app') {
-                        sh "terraform destroy -auto-approve"
-                    }
-                }
-            }
-        }
+        // stage("Destroy voting-app in EKS") {
+        //      when {
+        //         expression { params.ENVIRONMENT == 'destroy' }
+        //     }
+        //     steps {
+        //         script {
+        //             dir('kubernetes/voting-app') {
+        //                 sh "terraform destroy -auto-approve"
+        //             }
+        //         }
+        //     }
+        // }
 
         stage("Destroy sock-shop in EKS") {
              when {
