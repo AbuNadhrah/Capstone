@@ -1,13 +1,13 @@
 # AWS Availability Zones Datasource
 data "aws_availability_zones" "available" {
   #state = "available"
-  exclude_names = ["eu-west-2-iah-1a"]
+  exclude_names = ["eu-west-1-iah-1a"]
 }
 
 # Create VPC Terraform Module
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "3.19.0"
+  version = "5.5.2"
 
   # VPC Basic Details
   name            = "${local.name}-${var.vpc_name}"
@@ -15,6 +15,8 @@ module "vpc" {
   azs             = data.aws_availability_zones.available.names
   public_subnets  = var.vpc_public_subnets
   private_subnets = var.vpc_private_subnets
+
+  map_public_ip_on_launch = true 
 
   # Database Subnets
   create_database_subnet_group       = var.vpc_create_database_subnet_group
