@@ -19,7 +19,7 @@ terraform {
 
 
 data "aws_eks_cluster" "sales-prod-eks-sales" {
-  name = "sales-prod-eks-sale"
+  name = "sales-prod-eks-sales"
 }
 data "aws_eks_cluster_auth" "sales-prod-eks-sales_auth" {
   name = "sales-prod-eks-demo_auth"
