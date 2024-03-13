@@ -1,6 +1,6 @@
 resource "kubernetes_ingress_v1" "prome-ingress" {
   metadata {
-    name      = "promethues-grafana"
+    name      = "prometheus-grafana"
     namespace = "prometheus"
     labels = {
       name = "prometheus"
