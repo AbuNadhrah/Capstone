@@ -18,14 +18,14 @@ terraform {
 }
 
 
-data "aws_eks_cluster" "hr-dev-eks-demo" {
-  name = "hr-dev-eks-demo"
+data "aws_eks_cluster" "sales-prod-eks-sales" {
+  name = "sales-prod-eks-sales"
 }
-data "aws_eks_cluster_auth" "hr-dev-eks-demo_auth" {
-  name = "hr-dev-eks-demo_auth"
+data "aws_eks_cluster_auth" "sales-prod-eks-sales_auth" {
+  name = "sales-prod-eks-sales_auth"
 }
 
 
 provider "aws" {
-  region     = "eu-west-2"
+  region     = "eu-west-1"
 }
