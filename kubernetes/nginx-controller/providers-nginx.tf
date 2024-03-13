@@ -27,7 +27,7 @@ data "aws_eks_cluster_auth" "sales-prod-eks-sales_auth" {
 
 
 provider "aws" {
-  region     = "eu-west-2"
+  region     = "eu-west-1"
 }
 
 provider "helm" {
